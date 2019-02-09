@@ -1,19 +1,20 @@
 export default {
   data() {
     return {
+      labelposition: "right",
       form: {
-        name: "",
-
-        region: "",
-        date1: "",
-        date2: "",
+        firstname: "",
+        lastname: "",
         delivery: false,
-        type: [],
+        type: "1",
         resource: "",
         desc: "",
+        subtitle: "",
         email: "",
-        labelPosition: "right"
+        request: "",
+        checkedornot: ["I agree", "I do not agree"]
       },
+
       centerDialogVisible: false
     };
   },

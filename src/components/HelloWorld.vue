@@ -2,19 +2,38 @@
   <el-form
     ref="form"
     :model="form"
+    rules="rules"
+    class="claimform"
+    inline="true"
+    :label-position="labelposition"
     label-width="120px"
-    :label-position="labelPosition"
   >
-    <el-form-item label="First Name">
-      <el-input
-        v-model="form.name"
-        placeholder="First Name"
-        label="right"
-      ></el-input>
+    <el-form-item
+      label="First Name"
+      prop="firstname"
+      :rules="[
+        {
+          required: true,
+          message: 'This is a required field',
+          trigger: 'blur'
+        }
+      ]"
+    >
+      <el-input v-model="form.firstname" placeholder="John"></el-input>
     </el-form-item>
     <div style="margin: 20px;"></div>
-    <el-form-item label="Last Name">
-      <el-input v-model="form.name" placeholder="Last Name"></el-input>
+    <el-form-item
+      label="Last Name"
+      prop="lastname"
+      :rules="[
+        {
+          required: true,
+          message: 'This is a required field',
+          trigger: 'blur'
+        }
+      ]"
+    >
+      <el-input v-model="form.lastname" placeholder="Doe"></el-input>
     </el-form-item>
     <div style="margin: 20px;"></div>
     <el-form-item
@@ -23,7 +42,7 @@
       :rules="[
         {
           required: true,
-          message: 'Please input email address',
+          message: 'This is a required field',
           trigger: 'blur'
         },
         {
@@ -33,61 +52,69 @@
         }
       ]"
     >
-      <el-input v-model="form.email"></el-input>
+      <el-input v-model="form.email" placeholder="Email@example.com"></el-input>
     </el-form-item>
     <div style="margin: 20px;"></div>
-    <el-form-item label="Claim Request">
+    <el-form-item label="Subject Title">
       <el-input
-        type="textarea"
-        v-model="form.desc"
-        placeholder="Describe your request"
+        v-model="form.subtitle"
+        placeholder="Include topic of your email"
       ></el-input>
     </el-form-item>
     <div style="margin: 20px;"></div>
-    <el-form-item label="Terms and Conditions">
-      <el-checkbox-group v-model="form.type">
-        <el-checkbox label="I agree" name="type"></el-checkbox>
-        <el-checkbox label="I don't agree" name="type"></el-checkbox>
+    <el-form-item
+      label="Claim Request"
+      prop="request"
+      :rules="[
+        {
+          required: true,
+          message: 'This is a required field',
+          trigger: 'blur'
+        }
+      ]"
+    >
+      <textarea
+        rows="5"
+        class="form-control"
+        v-model="form.request"
+        placeholder="Describe your request"
+      ></textarea>
+    </el-form-item>
+    <div style="margin: 20px;"></div>
+    <el-form-item label="Terms and Conditions:">
+      <el-checkbox-group v-model="form.type" :max="1">
+        <el-checkbox label="I agree" name="type" checked></el-checkbox>
       </el-checkbox-group>
     </el-form-item>
     <div style="margin: 20px;"></div>
     <el-form-item>
+      <!-- <el-button type="primary" @click="onSubmit">Submit</el-button> -->
       <el-button type="primary" @click="onSubmit">Submit</el-button>
-      <el-button>Cancel</el-button>
+      <el-button @click="centerDialogVisible = true">Confirm</el-button>
     </el-form-item>
     <div style="margin: 20px;"></div>
-    <el-button type="text" @click="centerDialogVisible = true"
-      >Click to open the Dialog</el-button
-    >
 
     <el-dialog
-      title="Warning"
+      title="Confirmation"
+      class="popup"
       :visible.sync="centerDialogVisible"
-      width="30%"
+      width="100%"
+      fullscreen="true"
+      modal-append-to-body="true"
       center
     >
-      <span>
-        It should be noted that the content will not be aligned in center by
-        default
-      </span>
+      <div style="margin: 20px;"></div>
+      <span>Please confirm to submit information</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false"
+        <el-button type="text" @click="centerDialogVisible = false"
           >Confirm</el-button
         >
+        <el-button @click="centerDialogVisible = false">Cancel</el-button>
       </span>
     </el-dialog>
   </el-form>
 </template>
 
-<script>
-export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  }
-};
-</script>
 <script src="./form.js"></script>
 <style src="./form.css" scoped></style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
